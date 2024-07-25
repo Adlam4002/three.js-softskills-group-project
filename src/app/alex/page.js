@@ -1,19 +1,13 @@
 "use client";
 import css from "@/styles/alexHome.module.css";
-import dynamic from "next/dynamic";
-import { Suspense, useEffect, useState } from "react";
-import { TextureLoader } from "three";
-import { useLoader } from "@react-three/fiber";
-import Link from "next/link";
-
-// Dynamically import the Canvas component
-const Canvas = dynamic(() => import("@react-three/fiber").then(mod => mod.Canvas), {
-  ssr: false
-});
-
+import { Canvas } from "@react-three/fiber";
 import OrbitControls from "@/components/OrbitControls";
+// import Draggable from "@/components/Draggable";
 import Sun from "@/components/Sun";
 import Earth from "@/components/Earth";
+import { Suspense } from "react";
+import { TextureLoader } from "three";
+import { useLoader } from "@react-three/fiber";
 import Mercury from "@/components/Mercury";
 import Venus from "@/components/Venus";
 import Mars from "@/components/Mars";
@@ -21,22 +15,16 @@ import Jupiter from "@/components/Jupiter";
 import Saturn from "@/components/Saturn";
 import Uranus from "@/components/Uranus";
 import Neptune from "@/components/Neptune";
+import { RGBELoader } from "../utils/RGBELoader";
+import * as THREE from "three";
+import { extend, createRoot, events } from "@react-three/fiber";
+import { Environment, useEnvironment } from "@react-three/drei";
 import Scene from "@/components/Scene";
 import LightBulb from "@/components/LightBulb";
+import Link from "next/link";
+// import Flares from "@/components/Flares";
 
 export default function Home() {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsClient(true);
-    }
-  }, []);
-
-  if (!isClient) {
-    return null;
-  }
-
   const earthTexture = useLoader(TextureLoader, "/2k_earth_daymap.jpg");
   const mercuryTexture = useLoader(TextureLoader, "/2k_mercury.jpg");
   const sunTexture = useLoader(TextureLoader, "/2k_sun.jpg");
@@ -46,6 +34,8 @@ export default function Home() {
   const saturnTexture = useLoader(TextureLoader, "/2k_saturn.jpg");
   const uranusTexture = useLoader(TextureLoader, "/2k_uranus.jpg");
   const neptuneTexture = useLoader(TextureLoader, "/2k_neptune.jpg");
+
+  // const starsTexture = useLoader(TextureLoader, "/stars.jpg");
 
   return (
     <div className={css.scene}>
@@ -60,7 +50,9 @@ export default function Home() {
         }}
       >
         <Scene />
-        <Suspense fallback={<div>Loading...</div>}>
+        {/* <Draggable> */}
+        <Suspense fallback={null}>
+          {/* <LightBulb /> */}
           <Mercury map={mercuryTexture} />
           <Venus map={venusTexture} />
           <Earth map={earthTexture} />
@@ -71,6 +63,7 @@ export default function Home() {
           <Neptune map={neptuneTexture} />
           <Sun map={sunTexture} />
         </Suspense>
+        {/* </Draggable> */}
         <ambientLight color={"white"} intensity={0.5} />
       </Canvas>
     </div>
