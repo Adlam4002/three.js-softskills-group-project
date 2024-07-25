@@ -22,10 +22,9 @@ import Scene from "@/components/Scene";
 import LightBulb from "@/components/LightBulb";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { Canvas } from "@react-three/fiber"
 // import Flares from "@/components/Flares";
-const Canvas = dynamic(() => import("@react-three/fiber").then(mod => mod.Canvas), {
-  ssr: false
-});
+
 export default function Home() {
   const earthTexture = useLoader(TextureLoader, "/2k_earth_daymap.jpg");
   const mercuryTexture = useLoader(TextureLoader, "/2k_mercury.jpg");
