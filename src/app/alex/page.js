@@ -28,14 +28,13 @@ export default function Home() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // Set the flag to true if the window object is defined
     if (typeof window !== "undefined") {
       setIsClient(true);
     }
   }, []);
 
   if (!isClient) {
-    return null; // Render nothing on the server
+    return null;
   }
 
   const earthTexture = useLoader(TextureLoader, "/2k_earth_daymap.jpg");
