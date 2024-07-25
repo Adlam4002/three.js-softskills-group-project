@@ -34,6 +34,10 @@ export default function Home() {
     }
   }, []);
 
+  if (!isClient) {
+    return null; // Render nothing on the server
+  }
+
   const earthTexture = useLoader(TextureLoader, "/2k_earth_daymap.jpg");
   const mercuryTexture = useLoader(TextureLoader, "/2k_mercury.jpg");
   const sunTexture = useLoader(TextureLoader, "/2k_sun.jpg");
@@ -49,29 +53,27 @@ export default function Home() {
       <Link href={"/"} className="fixed z-10 bg-opacity-0 m-5">
         Home
       </Link>
-      {isClient && (
-        <Canvas
-          shadows
-          className={css.canvas}
-          camera={{
-            position: [-6, 7, 7],
-          }}
-        >
-          <Scene />
-          <Suspense fallback={null}>
-            <Mercury map={mercuryTexture} />
-            <Venus map={venusTexture} />
-            <Earth map={earthTexture} />
-            <Mars map={marsTexture} />
-            <Jupiter map={jupiterTexture} />
-            <Saturn map={saturnTexture} />
-            <Uranus map={uranusTexture} />
-            <Neptune map={neptuneTexture} />
-            <Sun map={sunTexture} />
-          </Suspense>
-          <ambientLight color={"white"} intensity={0.5} />
-        </Canvas>
-      )}
+      <Canvas
+        shadows
+        className={css.canvas}
+        camera={{
+          position: [-6, 7, 7],
+        }}
+      >
+        <Scene />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Mercury map={mercuryTexture} />
+          <Venus map={venusTexture} />
+          <Earth map={earthTexture} />
+          <Mars map={marsTexture} />
+          <Jupiter map={jupiterTexture} />
+          <Saturn map={saturnTexture} />
+          <Uranus map={uranusTexture} />
+          <Neptune map={neptuneTexture} />
+          <Sun map={sunTexture} />
+        </Suspense>
+        <ambientLight color={"white"} intensity={0.5} />
+      </Canvas>
     </div>
   );
 }
