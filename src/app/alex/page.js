@@ -1,6 +1,5 @@
 "use client";
 import css from "@/styles/alexHome.module.css";
-import { Canvas } from "@react-three/fiber";
 import OrbitControls from "@/components/OrbitControls";
 // import Draggable from "@/components/Draggable";
 import Sun from "@/components/Sun";
